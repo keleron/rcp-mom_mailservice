@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+// option java_multiple_files = true;
+// option java_package = "io.grpc.examples.helloworld";
+// option java_outer_classname = "HelloWorldProto";
+// option objc_class_prefix = "HLW";
+
+package helloworld;
+
+service Greeter {
+  rpc Log (Request) returns (Request) {}
+  rpc SendText (Text) returns (Text) {}
+  rpc ShowBandeja(Request) returns (Request) {}
+  rpc ListAllUsers(Request) returns (Request) {}
+  rpc ShowEnviados(Request) returns (Request) {}
+
+}
+
+message Empty {
+  
+}
+
+message Request {
+  string username = 1;
+}
+
+message Text {
+  string from_user = 1;
+  string to_user   = 2;
+  string text      = 3;
+  string date      = 4;
+}

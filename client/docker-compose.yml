@@ -1,0 +1,12 @@
+version: '3'
+services:
+  cliente:
+    image : tarea:client
+    command: python3 client.py
+    environment:
+      PYTHONUNBUFFERED: 1
+    build: 
+      dockerfile: client/df_client_python
+      context : ..
+    stdin_open: true
+    network_mode: host

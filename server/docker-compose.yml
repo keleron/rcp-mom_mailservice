@@ -1,0 +1,14 @@
+version: '3'
+services:
+  servidor:
+    image : tarea:server
+    hostname: SERVER
+    command: python3 server.py
+    environment:
+      PYTHONUNBUFFERED: 1
+    build: 
+      dockerfile: server/df_server_python
+      context : ..
+    ports:
+      - "50051:50051"
+    network_mode: host
