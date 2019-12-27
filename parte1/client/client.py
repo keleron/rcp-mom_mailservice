@@ -19,6 +19,7 @@ import threading
 # from time import sleep
 from datetime import datetime as dt
 from time import sleep
+from sys import argv
 
 import grpc
 import mail_pb2
@@ -31,7 +32,7 @@ menu1 = """
  3- Lista de Usuarios
  4- Enviados
 """
-f=open("in", "r")
+f=open(argv[1], "r")
 input = f.readline
 
 def run(username, stub):

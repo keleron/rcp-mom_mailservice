@@ -14,8 +14,9 @@ services:
     network_mode: host
 
   cliente:
+    container_name: ps_client
     hostname: CLIENT
-    command: python3 client.py
+    command: python3 client.py in
     environment:
       PYTHONUNBUFFERED: 1
     build:
@@ -27,19 +28,19 @@ services:
     depends_on: 
       - servidor
   
-  # cliente2:
-  #   deploy:
-  #     replicas: 2
-  #   hostname: CLIENT_BOMBARDERO
-  #   command: python3 client.py
-  #   # environment:
-  #     # PYTHONUNBUFFERED: 1
-  #   build:
-  #     dockerfile: client/DF_CLIENT
-  #     context: .
-  #   ports:
-  #     - "50051:50051"
-  #   network_mode: host
-  #   depends_on: 
-  #     - servidor
-  #     - cliente
+  cliente2:
+    deploy:
+      replicas: 2
+    hostname: CLIENT_BOMBARDERO
+    command: python3 client.py in2
+    # environment:
+      # PYTHONUNBUFFERED: 1
+    build:
+      dockerfile: client/DF_CLIENT
+      context: .
+    ports:
+      - "50051:50051"
+    network_mode: host
+    depends_on: 
+      - servidor
+      - cliente
