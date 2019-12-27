@@ -30,8 +30,8 @@ menu1 = """
  3- Lista de Usuarios
  4- Enviados
 """
-f=open("in", "r")
-input = f.read
+# f=open("in", "r")
+# input = f.read
 
 def run(username, stub):
     while (True):

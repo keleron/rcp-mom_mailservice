@@ -2,6 +2,7 @@ FROM python:slim
 COPY client/client.py client.py
 COPY mail.proto mail.proto 
 COPY client/in in
+COPY client/in2 in2
 RUN pip3 install grpcio
 RUN pip3 install grpcio-tools
 RUN python3 -m grpc_tools.protoc mail.proto --proto_path=. --python_out=. --grpc_python_out=.

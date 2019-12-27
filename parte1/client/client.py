@@ -36,7 +36,7 @@ input = f.readline
 
 def run(username, stub):
     while (True):
-        print(chr(27) + "[2J")
+        # print(chr(27) + "[2J")
         print(menu1.format(username))
         menu = input().strip(); sleep(1);
         if menu=="1":
