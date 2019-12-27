@@ -18,7 +18,6 @@ import logging
 import threading
 # from time import sleep
 from datetime import datetime as dt
-from time import sleep
 
 import grpc
 import mail_pb2
@@ -32,16 +31,16 @@ menu1 = """
  4- Enviados
 """
 f=open("in", "r")
-input = f.readline
+input = f.read
 
 def run(username, stub):
     while (True):
         print(chr(27) + "[2J")
         print(menu1.format(username))
-        menu = input().strip(); sleep(1);
+        menu = input(">>> ")
         if menu=="1":
             while True:
-                to_user = input().strip(); sleep(1);
+                to_user = input("To  : ")
                 m = mail_pb2.Request(username="empty")
 
                 lu = stub.ListAllUsers(m).username.split("\n")
@@ -50,7 +49,7 @@ def run(username, stub):
                     print("DESTINATARIO NO EXISTE")
                     continue
 
-                body = input().strip(); sleep(1);
+                body = input("body: ")
                 date = dt.now().strftime('%Y-%m-%d %H:%M:%S')
                 curr_mensaje = mail_pb2.Text(from_user=username, to_user = to_user,text = body, date=date)
                 stub.SendText(curr_mensaje)
@@ -61,21 +60,21 @@ def run(username, stub):
             m = mail_pb2.Request(username=username)
             lu = stub.ShowBandeja(m).username
             print(lu)
-            input().strip(); sleep(1);
+            input()
             # print("\t(Press any key to continue)"); getch.getch()
 
         elif menu == "3":
             m = mail_pb2.Request(username=username)
             users = stub.ListAllUsers(m)
             print(users.username)
-            input().strip(); sleep(1);
+            input()
             # print("\t(Press any key to continue)"); getch.getch()
         
         elif menu == "4":
             m = mail_pb2.Request(username=username)
             lu = stub.ShowEnviados(m).username
             print(lu)
-            input().strip(); sleep(1);
+            input()
             # print("\t(Press any key to continue)"); getch.getch()
         elif menu == "5":
             return
@@ -87,10 +86,10 @@ def run(username, stub):
 if __name__ == '__main__':
     # print(chr(27) + "[2J")
     print("INICIANDO CLIENTE")
-    # server_ip = input().strip(); sleep(1);
+    # server_ip = input("SERVER: ")
     server_ip = "localhost"
     # server_ip = "SERVER"
-    username = input().strip(); sleep(1);
+    username = input("Log with account: ") 
     
     channel = grpc.insecure_channel(f'{server_ip}:50051')
     stub = mail_pb2_grpc.GreeterStub(channel)

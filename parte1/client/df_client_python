@@ -1,6 +1,0 @@
-FROM python:slim
-COPY requirements.txt requirements.txt
-COPY client/client.py client.py
-COPY helloworld.proto helloworld.proto 
-RUN pip3 install -r requirements.txt
-RUN python3 -m grpc_tools.protoc helloworld.proto --proto_path=. --python_out=. --grpc_python_out=.

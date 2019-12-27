@@ -1,6 +1,0 @@
-FROM python:slim
-COPY server/server.py server.py
-COPY helloworld.proto helloworld.proto 
-RUN pip3 install grpcio
-RUN pip3 install grpcio-tools
-RUN python3 -m grpc_tools.protoc helloworld.proto --proto_path=. --python_out=. --grpc_python_out=.

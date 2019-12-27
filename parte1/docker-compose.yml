@@ -1,0 +1,27 @@
+version: "3"
+services:
+  servidor:
+    hostname: SERVER
+    command: python3 server.py
+    environment:
+      PYTHONUNBUFFERED: 1
+    build:
+      dockerfile: server/DF_SERVER
+      context: .
+    ports:
+      - "50051:50051"
+    network_mode: host
+
+  # cliente:
+  #   hostname: CLIENT
+  #   command: python3 client.py
+  #   environment:
+  #     PYTHONUNBUFFERED: 1
+  #   build:
+  #     dockerfile: client/DF_CLIENT
+  #     context: .
+  #   ports:
+  #     - "50051:50051"
+  #   network_mode: host
+  #   depends_on: 
+  #     - servidor
