@@ -1,18 +1,3 @@
-# Copyright 2015 gRPC authors.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-"""The Python implementation of the GRPC mail.Greeter client."""
-
 from __future__ import print_function
 import logging
 import threading
@@ -32,17 +17,26 @@ menu1 = """
  3- Lista de Usuarios
  4- Enviados
 """
-f=open(argv[1], "r")
-input = f.readline
+def fun(a=""):
+    print(a, end=" ")
+    global f; return f.readline().strip()
+
+if len(argv)>1:
+    f = open(argv[1], "r")
+    flag = True
+    input = fun
+else:
+    flag = False
 
 def run(username, stub):
     while (True):
         # print(chr(27) + "[2J")
         print(menu1.format(username))
-        menu = input().strip(); sleep(1);
+        menu = input(">>> ")
+        if flag: sleep(1)
         if menu=="1":
             while True:
-                to_user = input().strip(); sleep(1);
+                to_user = input("to user: ")
                 m = mail_pb2.Request(username="empty")
 
                 lu = stub.ListAllUsers(m).username.split("\n")
@@ -51,7 +45,7 @@ def run(username, stub):
                     print("DESTINATARIO NO EXISTE")
                     continue
 
-                body = input().strip(); sleep(1);
+                body = input("   body:\n\t")
                 date = dt.now().strftime('%Y-%m-%d %H:%M:%S')
                 curr_mensaje = mail_pb2.Text(from_user=username, to_user = to_user,text = body, date=date)
                 stub.SendText(curr_mensaje)
@@ -62,21 +56,21 @@ def run(username, stub):
             m = mail_pb2.Request(username=username)
             lu = stub.ShowBandeja(m).username
             print(lu)
-            input().strip(); sleep(1);
+            input()
             # print("\t(Press any key to continue)"); getch.getch()
 
         elif menu == "3":
             m = mail_pb2.Request(username=username)
             users = stub.ListAllUsers(m)
             print(users.username)
-            input().strip(); sleep(1);
+            input()
             # print("\t(Press any key to continue)"); getch.getch()
         
         elif menu == "4":
             m = mail_pb2.Request(username=username)
             lu = stub.ShowEnviados(m).username
             print(lu)
-            input().strip(); sleep(1);
+            input(); sleep(1)
             # print("\t(Press any key to continue)"); getch.getch()
         elif menu == "5":
             return
@@ -91,7 +85,7 @@ if __name__ == '__main__':
     # server_ip = input().strip(); sleep(1);
     server_ip = "localhost"
     # server_ip = "SERVER"
-    username = input().strip(); sleep(1);
+    username = input("username: ");
     
     channel = grpc.insecure_channel(f'{server_ip}:50051')
     stub = mail_pb2_grpc.GreeterStub(channel)
