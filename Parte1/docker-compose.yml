@@ -17,8 +17,8 @@ services:
     container_name: ps_client
     hostname: CLIENT
     command: python3 client.py in
-    environment:
-      PYTHONUNBUFFERED: 1
+    # environment:
+    #   PYTHONUNBUFFERED: 1
     build:
       dockerfile: client/DF_CLIENT
       context: .
@@ -31,7 +31,7 @@ services:
   cliente2:
     deploy:
       replicas: 2
-    hostname: CLIENT_BOMBARDERO
+    hostname: ps_client2
     command: python3 client.py in2
     # environment:
       # PYTHONUNBUFFERED: 1

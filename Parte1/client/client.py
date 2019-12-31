@@ -85,7 +85,7 @@ if __name__ == '__main__':
     # server_ip = input().strip(); sleep(1);
     server_ip = "localhost"
     # server_ip = "SERVER"
-    username = input("username: ");
+    username = input("username: ")
     
     channel = grpc.insecure_channel(f'{server_ip}:50051')
     stub = mail_pb2_grpc.GreeterStub(channel)
